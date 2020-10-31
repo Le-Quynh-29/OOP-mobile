@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="Moble.js"></script>
+</head>
+<body>
+<div style="border: 1px solid deepskyblue; display: inline-block;width:200px;height: 400px ;background-color: darkgray">
+    <h1 id="Iphone-name">Iphone</h1>
+    <p>Pin:
+        <input type="number" value="100" style="height: 10px; width:40px"/></p>
+    <textarea disabled id="Iphone-inbox" cols="20" rows="5" placeholder="Inbox"></textarea>
+    <textarea disabled id="Iphone-outbox" cols="20" rows="5" placeholder="Outbox"></textarea>
+    <input type="text" id="Iphone-message" oninput="" placeholder="Write Message" onkeyup="writeMess(ios)"/>
+    <button type="button" value="send" onclick="sendMess(ios,android)">Send</button>
+    <button type="button" value="home" onclick="anvaoday()">o</button>
+
+</div>
+<div style="border:1px solid deepskyblue;display: inline-block;width: 200px;height:400px;background-color: skyblue">
+    <h1 id="OPPO-name">OPPO</h1>
+    <p>Pin:
+        <input type="number" value="100" style="height: 10px; width:40px"/></p>
+    <textarea disabled id="OPPO-inbox" cols="20" rows="5" placeholder="Inbox"></textarea>
+    <textarea disabled id="OPPO-outbox" cols="20" rows="5" placeholder="Outbox"></textarea>
+    <input type="text" id="OPPO-message" placeholder="Write Message" onkeyup="writeMess(android)"/>
+    <button type="button" value="send" onclick="sendMess(android,ios)">Send</button>
+    <button type="button" value="home" onclick="anvaoday3()"></button>
+</div>
+</body>
+<script>
+    let android = new Moble("OPPO F11 Pro Max", "OPPO");
+    let ios = new Moble("Iphone 12 Pro Max", "Iphone");
+
+    function sendMess(mobile1, mobile2) {
+        mobile1.sendMsg(mobile2);
+        clearInput(mobile1);
+        showInbox(mobile2);
+        showOutput(mobile1);
+    }
+
+    function display(mobile) {
+        document.getElementById(mobile.id + "-name").innerHTML = mobile.name;
+        document.getElementById(mobile.id + "-inbox").innerHTML = mobile.inbox;
+        document.getElementById(mobile.id + "-outbox").innerHTML = mobile.outbox;
+    }
+
+    display(ios);
+    display(android);
+
+    function writeMess(moble) {
+        let msg = document.getElementById(moble.id + '-message').value;
+        moble.writeMsg(msg);
+    }
+
+    function clearInput(mobile) {
+        document.getElementById(mobile.id + "-message").value = '';
+    }
+
+    function showInbox(mobile) {
+        let inboxMessages = mobile.inbox;
+        let result = '';
+        for (let i = 0;i<inboxMessages.length;i++){
+            // result+=`${inboxMessages[i]}\n`
+            result += inboxMessages[i] + "\n"
+        }
+        document.getElementById(mobile.id + "-inbox").innerHTML = result;
+    }
+    function showOutput(mobile){
+        let outboxMess = mobile.outbox;
+        let result = '';
+        for (let i = 0; i < outboxMess.length; i++) {
+            // result += `${outboxMess[i]}\n`
+            result += outboxMess[i]+'\n';
+        }
+        document.getElementById(mobile.id + "-outbox").innerHTML = result;
+    }
+</script>
